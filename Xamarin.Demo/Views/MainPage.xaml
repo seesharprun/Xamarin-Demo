@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:c="clr-namespace:Xamarin.Demo.Converters"
+             x:Class="Xamarin.Demo.Views.MainPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <c:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+    </ContentPage.Resources>
+    <Grid IsEnabled="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.Triggers>
+            <DataTrigger TargetType="Grid" Binding="{Binding Loading}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+        </Grid.Triggers>
+        <Label Grid.Row="0" Text="{Binding Message}" Margin="20" />
+        <Image Grid.Row="1" Source="{Binding Image, Converter={StaticResource ByteArrayToImageConverter}}" Aspect="AspectFit" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        <Button Grid.Row="2" Text="Load Data" Command="{Binding LoadCommand}" Margin="20" />
+        <ActivityIndicator Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsRunning="{Binding Loading}" />
+    </Grid>
+</ContentPage>
